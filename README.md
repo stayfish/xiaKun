@@ -1,5 +1,11 @@
 # xiaKun
 
+项目是基于 `nonebot` 和 `go-cqhttp` 创建，驱动器选择的是 `fastapi`，适配器是 `OneBot V11` 
+
+
+
+
+
 ## How to start
 
 1. generate project using `nb create` .
