@@ -1,8 +1,7 @@
 # xiaKun
-
+## 简介
 项目是基于 `nonebot` 和 `go-cqhttp` 创建，驱动器选择的是 `fastapi`，适配器是 `OneBot V11` 
 可以用 host:port/go-cqhttp 进行可视化的管理账号
-
 
 
 

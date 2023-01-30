@@ -6,6 +6,9 @@
 
 accounts
 
+# 笔记信息
+Note.md
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
