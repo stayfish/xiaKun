@@ -9,6 +9,5 @@ prefix = '[ ' + prefix + ' ]'
 superuser = driver.config.superusers
 
 
-class Format:
-    urge: str = prefix + 'urge @<member>'
-    list: str = prefix + 'list'
+instr_urge = prefix + 'urge @<member>'
+instr_list = prefix + 'list'

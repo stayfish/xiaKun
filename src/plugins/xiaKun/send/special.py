@@ -1,15 +1,10 @@
-from nonebot import on_command
-from nonebot.adapters import Event, Bot
-from nonebot.permission import SUPERUSER
-from .. import format
-
-listener = on_command("list", rule=format.user_checker,
-                      permission=SUPERUSER)
+from nonebot.adapters import Bot
+from ..format import output
 
 
 async def get_friend_list(bot: Bot):
+    output.run_in("get_friend_list")
     list = await bot.get_friend_list()
-    print(list)
     msg = []
     n = len(list)
     msg.append("共有{total}个好友\n".format(total=n-1))
@@ -28,12 +23,3 @@ async def get_friend_list(bot: Bot):
         count = count + 1
         msg.append(message)
     return msg
-
-
-@listener.handle()
-async def send_list(bot: Bot, e: Event):
-    msg = await get_friend_list(bot)
-    await bot.send(
-        event=e,
-        message=msg
-    )
