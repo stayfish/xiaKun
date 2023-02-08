@@ -21,6 +21,8 @@ FASTAPI_RELOAD=true
 LOG_LEVEL=DEBUG
 ```
 
+如果需要发送本地文件，文件路径应该是 go-cqhttp 框架下的相对路径，本项目中图片的存储路径为框架下的 `imgs` 文件夹
+
 ## 使用
 
 插件名为 xiaKun，在 xiaKun 目录下有若干子目录，子目录为：

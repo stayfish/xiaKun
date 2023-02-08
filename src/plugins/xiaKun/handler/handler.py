@@ -43,33 +43,34 @@ async def urge_group_member(bot: Bot, e: Event):
         cmd = e.get_message()[1]
         print("指令后的内容是: {str}".format(str=cmd))
         receiver = int(cmd.data['qq'])
+        if receiver not in list:
+            error = "用户不在群内! " + \
+                "群用户有: {l}, ".format(l=list) + \
+                "接收者为: {id}".format(id=receiver)
+            raise GroupError(error)
     except (KeyError, IndexError) as e:
         error = "请输入正确的指令格式: \n" + format.urge
         print(e)
         await bot.send_group_msg(group_id=gid, message=error)
+        return
+    except GroupError as e:
+        print(e)
+        await bot.send_group_msg(group_id=gid, message=error)
+        return
+
+    if str(receiver) in format.superuser:
+        warning = "不能骚扰机器人管理员"
+        await bot.send_group_msg(group_id=gid, message=warning)
     else:
-        try:
-            if receiver not in list:
-                error = "用户不在群内! " + \
-                    "群用户有: {l}, ".format(l=list) + \
-                    "接收者为: {id}".format(id=receiver)
-                raise GroupError(error)
-        except GroupError as e:
-            print(e)
-            await bot.send_group_msg(group_id=gid, message=error)
+        friend_list = await info.get_friends_qq(bot, e)
+        if receiver in friend_list:
+            success = "私信成功"
+            await bot.send_group_msg(group_id=gid, message=success)
+            await send_general.spam(bot, receiver)
         else:
-            if str(receiver) in format.superuser:
-                warning = "不能骚扰机器人管理员"
-                await bot.send_group_msg(group_id=gid, message=warning)
-            else:
-                # friend_list = await bot.get_friend_list()
-                # friend_list = [elem['user_id'] for elem in friend_list]
-                friend_list = await info.get_friends_qq(bot, e)
-                if receiver in friend_list:
-                    success = "私信成功"
-                    await bot.send_group_msg(group_id=gid, message=success)
-                    await send_general.spam(bot, receiver)
-                else:
-                    msg = MessageSegment.image(
-                        "urge.webp") + MessageSegment.at(user_id=receiver)
-                    await bot.send_group_msg(group_id=gid, message=msg)
+            msg = MessageSegment.image(
+                "imgs/urge.webp")
+            # await bot.send_group_msg(group_id=gid, message=msg)
+            await bot.send_private_msg(userid=receiver, message=msg)
+            msg = MessageSegment.at(user_id=receiver)
+            await bot.send_group_msg(group_id=gid, message=msg)
