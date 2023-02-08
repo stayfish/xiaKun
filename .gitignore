@@ -5,6 +5,7 @@
 # 账号信息
 
 accounts
+.env*
 
 # 笔记信息
 Note.md
